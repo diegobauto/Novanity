@@ -2,3 +2,4 @@ Integrantes de Novanity:
 
 - Steven Espejo Cabarcas
 - Maricela del Pilar Coral
+- Diego Alejandro Bautista
