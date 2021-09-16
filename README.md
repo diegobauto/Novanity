@@ -4,3 +4,4 @@ Integrantes de Novanity:
 - Maricela del Pilar Coral
 - Diego Alejandro Bautista
 - Juan Pablo Mora Palacios
+- Yessica Carolina Cantero
