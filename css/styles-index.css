@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+body{
+ justify-content: center;
+ margin-top: 25vh;
+ display: flex;
+ background: url('https://images.unsplash.com/photo-1488477181946-6428a0291777?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
+ background-position: center top;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
+.card{
+  width: 60%;
+  min-height: 50vh;
+  float: left;
+  background: linear-gradient(10deg, rgba(231,131,147,1) 0%, rgba(222,32,32,1) 76%);
+}
+
+main {
+  width: 65%;
+  min-height: 50vh;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0px 10px 10px -6px black;
+}
+
+main .login {
+  width: 100%;
+}
+
+main .login h1 {
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 1.8rem;
+  letter-spacing: 5px;
+  color: #E93963;
+}
+
+main .login p {
+  margin-bottom: 40px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: rgba(77,79,92,0.5);
+}
+
+main .login div form input {
+  display: flex;
+  margin: 0 auto;
+}
+main .login div form .fill {
+  width: 51.4%;
+  padding-bottom: 8px;
+  outline: 0;
+  border: 0;
+  border-bottom: 1px solid #C4C4C4;
+  margin-bottom: 28px;
+  background: transparent;
+}
+
+main .login div form .fill::placeholder {
+  padding-left: 5px;
+  color: #43425D;
+  font-weight: 600;
+}
+
+main .login div form .button {
+  width: 120px;
+  padding: 8px 0;
+  margin-top: 40px;
+  border-radius: 5px;
+  justify-content: center;
+  border: 0;
+  background: #E93963;
+  color: white;
+  font-weight: 600;
+}
+
+main .login div form .button:hover{
+  background: #F9C8D3;
+  color: #4e534a;
+  transition: all 0.5s ease-in;
+}
