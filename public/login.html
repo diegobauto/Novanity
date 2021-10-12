@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" href="./Images/favicon.png">
-  <link rel="stylesheet" href="./css/styles-index.css">
+  <link rel="stylesheet" href="css/styles-index.css">
   <title>Iniciar sesión - Novanity</title>
 </head>
 <body>
@@ -15,7 +14,7 @@
       <h1>Control de Ventas</h1>
       <p>Bienvenidos</p>
       <div>
-        <form action="./html/inicio.html" method="GET">
+        <form onsubmit="window.top.location.href = '/home'" method="GET">
           <input class="fill" type="text" name="user" placeholder="Correo">
           <input class="fill" type="password" name="password" placeholder="Contraseña">
           <input type="submit" class="button" name="send" value="Ingresar">

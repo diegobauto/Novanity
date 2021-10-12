@@ -10,7 +10,12 @@
     <link rel="stylesheet" type="text/css" href="../css/theme.css" />
 
     <script src="../external/jquery/jquery-1.8.3.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore-compat.js"></script>
+    <script src="../../createStore.js"></script>
     <script src="db.js"></script>
+
 
     <script src="../src/jsgrid.core.js"></script>
     <script src="../src/jsgrid.load-indicator.js"></script>
@@ -26,6 +31,14 @@
 <body>
     <div id="jsGrid"></div>
     <script>
+
+        //se valida que los campos no esten vacios
+        function validar(args) {
+            if (!args.item.N_Pedido ||!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor ) {
+                args.cancel = true;
+                return;
+            }
+        }
         $(function() {
 
             $("#jsGrid").jsGrid({
@@ -41,6 +54,8 @@
                 pageButtonCount: 5,
                 deleteConfirm: "Desea eliminarlo?",
                 controller: db,
+                onItemInserting: validar,
+                onItemUpdating: validar,
                 fields: [
                     { name: "N_Pedido", type: "text", width: 150 },
                     { name: "Descripcion", type: "text", width: 300 },

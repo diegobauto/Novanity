@@ -4,24 +4,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
-body{
- justify-content: center;
- margin-top: 25vh;
- display: flex;
- background: url('https://images.unsplash.com/photo-1488477181946-6428a0291777?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
- background-position: center top;
- background-repeat: no-repeat;
- background-size: cover;
+body {
+  justify-content: center;
+  margin-top: 25vh;
+  display: flex;
+  background: url("https://images.unsplash.com/photo-1488477181946-6428a0291777?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.card{
+.card {
   width: 60%;
   min-height: 50vh;
   float: left;
-  background: linear-gradient(10deg, rgba(231,131,147,1) 0%, rgba(222,32,32,1) 76%);
+  background: linear-gradient(
+    10deg,
+    rgba(231, 131, 147, 1) 0%,
+    rgba(222, 32, 32, 1) 76%
+  );
 }
 
 main {
@@ -43,14 +47,14 @@ main .login h1 {
   font-weight: 400;
   font-size: 1.8rem;
   letter-spacing: 5px;
-  color: #E93963;
+  color: #e93963;
 }
 
 main .login p {
   margin-bottom: 40px;
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(77,79,92,0.5);
+  color: rgba(77, 79, 92, 0.5);
 }
 
 main .login div form input {
@@ -62,14 +66,14 @@ main .login div form .fill {
   padding-bottom: 8px;
   outline: 0;
   border: 0;
-  border-bottom: 1px solid #C4C4C4;
+  border-bottom: 1px solid #c4c4c4;
   margin-bottom: 28px;
   background: transparent;
 }
 
 main .login div form .fill::placeholder {
   padding-left: 5px;
-  color: #43425D;
+  color: #43425d;
   font-weight: 600;
 }
 
@@ -80,13 +84,13 @@ main .login div form .button {
   border-radius: 5px;
   justify-content: center;
   border: 0;
-  background: #E93963;
+  background: #e93963;
   color: white;
   font-weight: 600;
 }
 
-main .login div form .button:hover{
-  background: #F9C8D3;
+main .login div form .button:hover {
+  background: #f9c8d3;
   color: #4e534a;
   transition: all 0.5s ease-in;
 }
