@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import {
+  crearUsuario,
+  datosUsuario,
+  loginUsuario,
+  logOutUsuario,
+} from "./LoginDatabase";
+import style from "./Login.module.css";
 export default function App() {
   return (
     <Router>
@@ -42,6 +48,9 @@ function Header() {
         <Link to="/ventas">
           <i className="fas fa-hand-holding-usd"></i>Ventas
         </Link>
+        <Link to="/" onClick={logOutUsuario}>
+          Cerrar Sesion
+        </Link>
       </nav>
     </header>
   );
@@ -55,7 +64,8 @@ function Home() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>Steven Espejo</h2>
+            <h2>Bienvenido</h2>
+
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -89,12 +99,15 @@ function Home() {
             </a>
           </div>
         </section>
+        <div />
       </main>
     </>
   );
 }
 
 function Users() {
+  const presuntoUsuario = datosUsuario();
+  console.log({ presuntoUsuario });
   return (
     <>
       <Header />
@@ -102,7 +115,7 @@ function Users() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>Steven Espejo</h2>
+            <h2>{window.usuario.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -123,7 +136,7 @@ function Productos() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>Steven Espejo</h2>
+            <h2>{window.usuario.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -145,7 +158,7 @@ function Ventas() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>Steven Espejo</h2>
+            <h2>{window.usuario.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -159,9 +172,58 @@ function Ventas() {
 }
 
 function Login() {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleClick = async () => {
+    console.log("entro");
+    //crearUsuario("maricelacoral033@gmail.com", "123456");
+    try {
+      setError(false);
+      const usuario = await loginUsuario(login, password);
+      console.log("autenticado", usuario);
+      window.location.pathname = "/home";
+    } catch (err) {
+      setError(true);
+      console.log("esta fallando", err);
+    }
+  };
   return (
-    <section className="table">
-      <iframe src="login.html"></iframe>
-    </section>
+    <>
+      <main className={style.main}>
+        <div className={style.card}></div>
+        <section className={style.login}>
+          <h1 className={style.h1}>Control de Ventas</h1>
+          <p className={style.p}>Bienvenidos</p>
+          <div>
+            <form className={style.form}>
+              <input
+                className={style.fill}
+                type="text"
+                placeholder="Correo"
+                onChange={(e) => setLogin(e.target.value)}
+              />
+            </form>
+            <form className={style.form}>
+              <input
+                className={style.fill}
+                type="password"
+                placeholder="Contraseña"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </form>
+            {error && <div>Autenticacion no valida</div>}
+            <button
+              className={style.button}
+              value="Ingresar"
+              onClick={handleClick}
+            >
+              Ingresar
+            </button>
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
