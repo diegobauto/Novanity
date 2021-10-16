@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   crearUsuario,
   datosUsuario,
@@ -64,7 +64,7 @@ function Home() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>Bienvenido</h2>
+            <h2>{(window.usuario && window.usuario.email) || "Bienvenidos"}</h2>
 
             <i className="fas fa-chevron-down"></i>
           </a>
@@ -72,7 +72,7 @@ function Home() {
         <section className="category">
           <h2 className="title">Panel administrativo</h2>
           <div>
-            <a href="usuario.html">
+            <a href="#/users">
               <figure>
                 <h2>Usuarios</h2>
                 <p>18</p>
@@ -81,7 +81,7 @@ function Home() {
             </a>
           </div>
           <div>
-            <a href="productos.html">
+            <a href="#/products">
               <figure>
                 <h2>Productos</h2>
                 <p>17</p>
@@ -90,7 +90,7 @@ function Home() {
             </a>
           </div>
           <div>
-            <a href="ventas.html">
+            <a href="#/ventas">
               <figure>
                 <h2>Ventas</h2>
                 <p>16</p>
@@ -115,7 +115,7 @@ function Users() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>{window.usuario.email}</h2>
+            <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -136,7 +136,7 @@ function Productos() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>{window.usuario.email}</h2>
+            <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -158,7 +158,7 @@ function Ventas() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <a href="">
-            <h2>{window.usuario.email}</h2>
+            <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </a>
         </section>
@@ -183,7 +183,7 @@ function Login() {
       setError(false);
       const usuario = await loginUsuario(login, password);
       console.log("autenticado", usuario);
-      window.location.pathname = "/home";
+      window.location.hash = "/home";
     } catch (err) {
       setError(true);
       console.log("esta fallando", err);

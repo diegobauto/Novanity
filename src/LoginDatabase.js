@@ -58,6 +58,7 @@ export const loginUsuario = async (email, password) => {
       password
     );
 
+    window.usuario = credencialesUsuario.user;
     return credencialesUsuario.user;
   } catch (e) {
     throw new Error(e);
@@ -70,6 +71,7 @@ export const logOutUsuario = async () => {
     const respuesta = await signOut(auth);
     console.log(respuesta);
     console.log("Me sali...!");
+    window.usuario = null;
   } catch (e) {
     throw new Error(e);
   }
@@ -96,9 +98,9 @@ export const datosUsuario = () => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     window.usuario = user;
-    console.log("El usuario logueado", window.usuario);
+    window.location.hash = "/home";
   } else {
-    console.log("El usuario ya no esta logueado");
-    window.usuario = "";
+    window.usuario = null;
+    window.location.hash = "/";
   }
 });
