@@ -34,7 +34,7 @@
 
         //se valida que los campos no esten vacios
         function validar(args) {
-            if (!args.item.N_Pedido ||!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor ) {
+            if (!args.item.N_Pedido ||!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor || !args.item.ID_Cliente || !args.item.Cliente) {
                 args.cancel = true;
                 return;
             }
@@ -57,15 +57,19 @@
                 onItemInserting: validar,
                 onItemUpdating: validar,
                 fields: [
-                    { name: "N_Pedido", type: "text", width: 150 },
-                    { name: "Descripcion", type: "text", width: 300 },
-                    { name: "Precio_Total", type: "number", width: 150 },
+                    {editing:false, name: "N_Pedido", type: "text", width: 100 },
+                    { name: "Descripcion", type: "text", width: 180 },
+                    { name: "Precio_Total", type: "number", width: 100 },
                     { name: "Vendedor", type: "text", width: 150 },
+                    { name: "ID_Cliente", type: "text", width: 150 },
+                    { name: "Cliente", type: "text", width: 150 },
                     { type: "control" }
                 ]
             });
 
         });
+
+        
     </script>
 </body>
 </html>
