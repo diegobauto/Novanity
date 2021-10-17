@@ -9,7 +9,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 //referencia a la base de datos
-import { getFirestore } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { createNanoEvents } from "nanoevents";
+
+export const eventBus = createNanoEvents();
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYsAy0a7WHRoKqfyyfCyVI-i6gcKfSPbY",
@@ -59,6 +68,7 @@ export const loginUsuario = async (email, password) => {
     );
 
     window.usuario = credencialesUsuario.user;
+    eventBus.emit("usuario cambio", credencialesUsuario.user);
     return credencialesUsuario.user;
   } catch (e) {
     throw new Error(e);
@@ -81,13 +91,10 @@ export const logOutUsuario = async () => {
 export const datosUsuario = () => {
   try {
     const user = auth.currentUser;
-    console.log(user);
 
     if (user) {
-      console.log(user);
       return user;
     } else {
-      console.log("datos usuario:", user);
       return undefined;
     }
   } catch (e) {
@@ -99,8 +106,18 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     window.usuario = user;
     window.location.hash = "/home";
+    eventBus.emit("usuario cambio", user);
   } else {
     window.usuario = null;
     window.location.hash = "/";
+    eventBus.emit("usuario cambio", null);
   }
 });
+
+export async function getRolUsuario(email) {
+  const rolRef = collection(database, "usuarios");
+  const q = query(rolRef, where("Correo", "==", email));
+  const docs = await getDocs(q);
+  const role = docs.docs[0].data().Rol;
+  return role;
+}

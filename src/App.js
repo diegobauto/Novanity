@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   crearUsuario,
   datosUsuario,
   loginUsuario,
   logOutUsuario,
+  getRolUsuario,
+  eventBus,
 } from "./LoginDatabase";
 import style from "./Login.module.css";
 export default function App() {
@@ -32,6 +34,22 @@ export default function App() {
 }
 
 function Header() {
+  const [esAdministrador, setEsAdministrador] = useState(false);
+
+  useEffect(() => {
+    cargarRole(window.usuario);
+
+    eventBus.on("usuario cambio", async (user) => {
+      cargarRole(user);
+    });
+  }, []);
+
+  async function cargarRole(user) {
+    if (user == null) return;
+    let role = await getRolUsuario(user.email);
+    if (role === 2) setEsAdministrador(true);
+  }
+
   return (
     <header>
       <h1>Novanity</h1>
@@ -39,9 +57,11 @@ function Header() {
         <Link to="/home">
           <i className="fas fa-chevron-right"></i>Inicio
         </Link>
-        <Link to="/users">
-          <i className="fas fa-user"></i>Usuarios
-        </Link>
+        {esAdministrador && (
+          <Link to="/users">
+            <i className="fas fa-user"></i>Usuarios
+          </Link>
+        )}
         <Link to="/products">
           <i className="fas fa-people-carry"></i>Productos
         </Link>
@@ -57,17 +77,26 @@ function Header() {
 }
 
 function Home() {
+  const [email, setEmail] = useState(window.usuario?.email);
+
+  useEffect(() => {
+    eventBus.on("usuario cambio", async (user) => {
+      if (user == null) return;
+      setEmail(user.email);
+    });
+  }, []);
+
   return (
     <>
       <Header />
       <main>
         <section className="user_login">
           <i className="fas fa-bell"></i>
-          <a href="">
-            <h2>{(window.usuario && window.usuario.email) || "Bienvenidos"}</h2>
+          <div>
+            <h2>{email || "Bienvenido"}</h2>
 
             <i className="fas fa-chevron-down"></i>
-          </a>
+          </div>
         </section>
         <section className="category">
           <h2 className="title">Panel administrativo</h2>
@@ -93,7 +122,7 @@ function Home() {
             <a href="#/ventas">
               <figure>
                 <h2>Ventas</h2>
-                <p>16</p>
+                <p>9</p>
               </figure>
               <i className="fas fa-chart-line"></i>
             </a>
@@ -107,21 +136,23 @@ function Home() {
 
 function Users() {
   const presuntoUsuario = datosUsuario();
-  console.log({ presuntoUsuario });
   return (
     <>
       <Header />
       <main>
         <section className="user_login">
           <i className="fas fa-bell"></i>
-          <a href="">
+          <div>
             <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
-          </a>
+          </div>
         </section>
         <h2 className="title2">Gestionar Usuarios</h2>
         <section className="table">
-          <iframe src="jsgrid/tabla-usuario/basic.html"></iframe>
+          <iframe
+            title="usuarios"
+            src="jsgrid/tabla-usuario/basic.html"
+          ></iframe>
         </section>
       </main>
     </>
@@ -135,15 +166,18 @@ function Productos() {
       <main>
         <section className="user_login">
           <i className="fas fa-bell"></i>
-          <a href="">
+          <div>
             <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
-          </a>
+          </div>
         </section>
 
         <h2 className="title2">Gestionar Productos</h2>
         <section className="table">
-          <iframe src="jsgrid/tabla-productos/basic.html"></iframe>
+          <iframe
+            title="productos"
+            src="jsgrid/tabla-productos/basic.html"
+          ></iframe>
         </section>
       </main>
     </>
@@ -157,14 +191,14 @@ function Ventas() {
       <main>
         <section className="user_login">
           <i className="fas fa-bell"></i>
-          <a href="">
+          <div>
             <h2>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
-          </a>
+          </div>
         </section>
         <h2 className="title2">Gestionar Ventas</h2>
         <section className="table">
-          <iframe src="jsgrid/tabla-ventas/basic.html"></iframe>
+          <iframe title="ventas" src="jsgrid/tabla-ventas/basic.html"></iframe>
         </section>
       </main>
     </>
