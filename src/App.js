@@ -86,6 +86,22 @@ function Home() {
     });
   }, []);
 
+  const [esAdmin, setEsAdmin] = useState(false);
+
+  useEffect(() => {
+    cargarRole(window.usuario);
+
+    eventBus.on("usuario cambio", async (user) => {
+      cargarRole(user);
+    });
+  }, []);
+
+  async function cargarRole(user) {
+    if (user == null) return;
+    let role = await getRolUsuario(user.email);
+    if (role === 2) setEsAdmin(true);
+  }
+
   return (
     <>
       <Header />
@@ -93,22 +109,26 @@ function Home() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <div>
-            <h2>{email || "Bienvenido"}</h2>
+            <h2 className={style.usuario}>{email || "Bienvenido"}</h2>
 
             <i className="fas fa-chevron-down"></i>
           </div>
         </section>
         <section className="category">
           <h2 className="title">Panel administrativo</h2>
-          <div>
-            <a href="#/users">
-              <figure>
-                <h2>Usuarios</h2>
-                <p>18</p>
-              </figure>
-              <i className="fas fa-users"></i>
-            </a>
-          </div>
+
+          {esAdmin && (
+            <div>
+              <a href="#/users">
+                <figure>
+                  <h2>Usuarios</h2>
+                  <p>18</p>
+                </figure>
+                <i className="fas fa-users"></i>
+              </a>
+            </div>
+          )}
+
           <div>
             <a href="#/products">
               <figure>
@@ -143,7 +163,7 @@ function Users() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <div>
-            <h2>{window.usuario?.email}</h2>
+            <h2 className={style.usuario}>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </div>
         </section>
@@ -167,7 +187,7 @@ function Productos() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <div>
-            <h2>{window.usuario?.email}</h2>
+            <h2 className={style.usuario}>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </div>
         </section>
@@ -192,7 +212,7 @@ function Ventas() {
         <section className="user_login">
           <i className="fas fa-bell"></i>
           <div>
-            <h2>{window.usuario?.email}</h2>
+            <h2 className={style.usuario}>{window.usuario?.email}</h2>
             <i className="fas fa-chevron-down"></i>
           </div>
         </section>
