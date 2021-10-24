@@ -7,8 +7,10 @@ import {
   logOutUsuario,
   getRolUsuario,
   eventBus,
+  getEstadoUsuario,
 } from "./LoginDatabase";
 import style from "./Login.module.css";
+
 export default function App() {
   return (
     <Router>
@@ -24,6 +26,9 @@ export default function App() {
         </Route>
         <Route path="/home">
           <Home />
+        </Route>
+        <Route path="/add-user">
+          <AddUser />
         </Route>
         <Route path="/">
           <Login />
@@ -268,6 +273,14 @@ function Login() {
               />
             </form>
             {error && <div>Autenticacion no valida</div>}
+
+            <p className={style.link}>
+              No tienes cuenta?{" "}
+              <Link to="/add-user">
+                <span>Registrate</span>
+              </Link>
+            </p>
+
             <button
               className={style.button}
               value="Ingresar"
@@ -278,6 +291,105 @@ function Login() {
           </div>
         </section>
       </main>
+    </>
+  );
+}
+
+function AddUser() {
+  const [correo, setCorreo] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmarPassword, setconfirmarPassword] = useState(null);
+  const [correoAutorizado, setCorreoAutorizado] = useState(true);
+  const [igualPassword, setigualPassword] = useState(true);
+  const [error, setError] = useState(false);
+  const [longPassword, setLongPassword] = useState(true);
+
+  const handleClick = async () => {
+    console.log(password.length);
+    if (!correo) return;
+    if (!password) return;
+    if (password !== confirmarPassword) {
+      setigualPassword(false);
+      return;
+    } else {
+      setigualPassword(true);
+    }
+
+    let estadoUsuario = await getEstadoUsuario(correo);
+    console.log(estadoUsuario);
+    if (estadoUsuario !== 1) {
+      setCorreoAutorizado(false);
+      return;
+    } else {
+      setCorreoAutorizado(true);
+    }
+    if (password.length < 6) {
+      setLongPassword(false);
+      return;
+    } else {
+      setLongPassword(true);
+    }
+
+    try {
+      setError(false);
+      await crearUsuario(correo, password);
+    } catch (err) {
+      setError(true);
+      console.log("esta fallando", err);
+    }
+  };
+  return (
+    <>
+      <section className={style.formRegister}>
+        <h4 className={style.h4}>Registrar Nuevo Usuario</h4>
+        <input
+          className={style.controls}
+          type="email"
+          name="correo"
+          id="correo"
+          placeholder="Correo"
+          onChange={(e) => {
+            setCorreo(e.target.value);
+          }}
+        />
+        <input
+          className={style.controls}
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Contraseña"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <input
+          className={style.controls}
+          type="password"
+          name="ConfirmarPassword"
+          id="ConfirmarPassword"
+          placeholder="Confirmar contraseña"
+          onChange={(e) => {
+            setconfirmarPassword(e.target.value);
+          }}
+        />
+
+        {!correoAutorizado && <h4>El correo no se encuentra autorizado</h4>}
+        {!igualPassword && <h4>No coincide la contraseña </h4>}
+        {error && <h4> Error: Se requiere una cuenta de gmail </h4>}
+        {!longPassword && (
+          <h4> Error: La contraseña debe tener 6 o mas caracteres </h4>
+        )}
+
+        <button className={style.buttons} onClick={handleClick}>
+          Crear Registro
+        </button>
+        <p>
+          Ya tienes cuenta?{" "}
+          <Link to="/">
+            <span>Inicia Sesion</span>
+          </Link>
+        </p>
+      </section>
     </>
   );
 }
