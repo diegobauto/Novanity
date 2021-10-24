@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   crearUsuario,
-  datosUsuario,
   loginUsuario,
   logOutUsuario,
   getRolUsuario,
@@ -40,6 +39,7 @@ export default function App() {
 
 function Header() {
   const [esAdministrador, setEsAdministrador] = useState(false);
+  const [usuario, setUsuario] = useState(!!window.usuario);
 
   useEffect(() => {
     cargarRole(window.usuario);
@@ -53,41 +53,49 @@ function Header() {
     if (user == null) return;
     let role = await getRolUsuario(user.email);
     if (role === 2) setEsAdministrador(true);
+    setUsuario(!!user);
   }
 
   return (
     <header>
-      <h1>Novanity</h1>
-      <nav>
-        <Link to="/home">
-          <i className="fas fa-chevron-right"></i>Inicio
-        </Link>
-        {esAdministrador && (
-          <Link to="/users">
-            <i className="fas fa-user"></i>Usuarios
-          </Link>
-        )}
-        <Link to="/products">
-          <i className="fas fa-people-carry"></i>Productos
-        </Link>
-        <Link to="/ventas">
-          <i className="fas fa-hand-holding-usd"></i>Ventas
-        </Link>
-        <Link to="/" onClick={logOutUsuario}>
-          Cerrar Sesion
-        </Link>
-      </nav>
+      {usuario && (
+        <>
+          <h1>Novanity</h1>
+          <nav>
+            <Link to="/home">
+              <i className="fas fa-chevron-right"></i>Inicio
+            </Link>
+            {esAdministrador && (
+              <Link to="/users">
+                <i className="fas fa-user"></i>Usuarios
+              </Link>
+            )}
+            <Link to="/products">
+              <i className="fas fa-people-carry"></i>Productos
+            </Link>
+            <Link to="/ventas">
+              <i className="fas fa-hand-holding-usd"></i>Ventas
+            </Link>
+            <Link to="/" onClick={logOutUsuario}>
+              Cerrar Sesion
+            </Link>
+          </nav>
+        </>
+      )}
     </header>
   );
 }
 
 function Home() {
   const [email, setEmail] = useState(window.usuario?.email);
+  console.log(window.usuario);
+  const [usuario, setUsuario] = useState(!!window.usuario);
 
   useEffect(() => {
     eventBus.on("usuario cambio", async (user) => {
       if (user == null) return;
       setEmail(user.email);
+      setUsuario(!!user);
     });
   }, []);
 
@@ -110,122 +118,168 @@ function Home() {
   return (
     <>
       <Header />
-      <main>
-        <section className="user_login">
-          <i className="fas fa-bell"></i>
-          <div>
-            <h2 className={style.usuario}>{email || "Bienvenido"}</h2>
-
-            <i className="fas fa-chevron-down"></i>
-          </div>
-        </section>
-        <section className="category">
-          <h2 className="title">Panel administrativo</h2>
-
-          {esAdmin && (
+      {usuario && (
+        <main>
+          <section className="user_login">
+            <i className="fas fa-bell"></i>
             <div>
-              <a href="#/users">
+              <h2 className={style.usuario}>{email || "Bienvenido"}</h2>
+
+              <i className="fas fa-chevron-down"></i>
+            </div>
+          </section>
+          <section className="category">
+            <h2 className="title">Panel administrativo</h2>
+
+            {esAdmin && (
+              <div>
+                <a href="#/users">
+                  <figure>
+                    <h2>Usuarios</h2>
+                    <p>18</p>
+                  </figure>
+                  <i className="fas fa-users"></i>
+                </a>
+              </div>
+            )}
+
+            <div>
+              <a href="#/products">
                 <figure>
-                  <h2>Usuarios</h2>
-                  <p>18</p>
+                  <h2>Productos</h2>
+                  <p>17</p>
                 </figure>
-                <i className="fas fa-users"></i>
+                <i className="fas fa-truck"></i>
               </a>
             </div>
-          )}
-
-          <div>
-            <a href="#/products">
-              <figure>
-                <h2>Productos</h2>
-                <p>17</p>
-              </figure>
-              <i className="fas fa-truck"></i>
-            </a>
-          </div>
-          <div>
-            <a href="#/ventas">
-              <figure>
-                <h2>Ventas</h2>
-                <p>9</p>
-              </figure>
-              <i className="fas fa-chart-line"></i>
-            </a>
-          </div>
-        </section>
-        <div />
-      </main>
+            <div>
+              <a href="#/ventas">
+                <figure>
+                  <h2>Ventas</h2>
+                  <p>9</p>
+                </figure>
+                <i className="fas fa-chart-line"></i>
+              </a>
+            </div>
+          </section>
+          <div />
+        </main>
+      )}
     </>
   );
 }
 
 function Users() {
-  const presuntoUsuario = datosUsuario();
+  const [usuario, setUsuario] = useState(!!window.usuario);
+  useEffect(() => {
+    cargarRole(window.usuario);
+
+    eventBus.on("usuario cambio", async (user) => {
+      cargarRole(user);
+    });
+  }, []);
+
+  async function cargarRole(user) {
+    setUsuario(!!user);
+  }
   return (
     <>
       <Header />
-      <main>
-        <section className="user_login">
-          <i className="fas fa-bell"></i>
-          <div>
-            <h2 className={style.usuario}>{window.usuario?.email}</h2>
-            <i className="fas fa-chevron-down"></i>
-          </div>
-        </section>
-        <h2 className="title2">Gestionar Usuarios</h2>
-        <section className="table">
-          <iframe
-            title="usuarios"
-            src="jsgrid/tabla-usuario/basic.html"
-          ></iframe>
-        </section>
-      </main>
+      {usuario && (
+        <main>
+          <section className="user_login">
+            <i className="fas fa-bell"></i>
+            <div>
+              <h2 className={style.usuario}>{window.usuario?.email}</h2>
+              <i className="fas fa-chevron-down"></i>
+            </div>
+          </section>
+          <h2 className="title2">Gestionar Usuarios</h2>
+          <section className="table">
+            <iframe
+              title="usuarios"
+              src="jsgrid/tabla-usuario/basic.html"
+            ></iframe>
+          </section>
+        </main>
+      )}
     </>
   );
 }
 
 function Productos() {
+  const [usuario, setUsuario] = useState(!!window.usuario);
+  useEffect(() => {
+    cargarRole(window.usuario);
+
+    eventBus.on("usuario cambio", async (user) => {
+      cargarRole(user);
+    });
+  }, []);
+
+  async function cargarRole(user) {
+    setUsuario(!!user);
+  }
   return (
     <>
       <Header></Header>
-      <main>
-        <section className="user_login">
-          <i className="fas fa-bell"></i>
-          <div>
-            <h2 className={style.usuario}>{window.usuario?.email}</h2>
-            <i className="fas fa-chevron-down"></i>
-          </div>
-        </section>
+      {usuario && (
+        <main>
+          <section className="user_login">
+            <i className="fas fa-bell"></i>
+            <div>
+              <h2 className={style.usuario}>{window.usuario?.email}</h2>
+              <i className="fas fa-chevron-down"></i>
+            </div>
+          </section>
 
-        <h2 className="title2">Gestionar Productos</h2>
-        <section className="table">
-          <iframe
-            title="productos"
-            src="jsgrid/tabla-productos/basic.html"
-          ></iframe>
-        </section>
-      </main>
+          <h2 className="title2">Gestionar Productos</h2>
+          <section className="table">
+            <iframe
+              title="productos"
+              src="jsgrid/tabla-productos/basic.html"
+            ></iframe>
+          </section>
+        </main>
+      )}
     </>
   );
 }
 
 function Ventas() {
+  const [usuario, setUsuario] = useState(!!window.usuario);
+  useEffect(() => {
+    cargarRole(window.usuario);
+
+    eventBus.on("usuario cambio", async (user) => {
+      cargarRole(user);
+    });
+  }, []);
+
+  async function cargarRole(user) {
+    setUsuario(!!user);
+  }
   return (
     <>
       <Header></Header>
-      <main>
-        <section className="user_login">
-          <i className="fas fa-bell"></i>
-          <div>
-            <h2 className={style.usuario}>{window.usuario?.email}</h2>
-            <i className="fas fa-chevron-down"></i>
-          </div>
-        </section>
-        <h2 className="title2">Gestionar Ventas</h2>
-        <section className="table">
-          <iframe title="ventas" src="jsgrid/tabla-ventas/basic.html"></iframe>
-        </section>
-      </main>
+      {usuario && (
+        <main>
+          <section className="user_login">
+            <i className="fas fa-bell"></i>
+            <div>
+              <h2 className={style.usuario}>{window.usuario?.email}</h2>
+              <i className="fas fa-chevron-down"></i>
+            </div>
+          </section>
+          <h2 className="title2">Gestionar Ventas</h2>
+          <section className="table">
+            <iframe
+              title="ventas"
+              src="jsgrid/tabla-ventas/basic.html"
+            ></iframe>
+          </section>
+        </main>
+      )}
     </>
   );
 }
