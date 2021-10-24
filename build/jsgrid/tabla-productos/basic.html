@@ -10,6 +10,13 @@
     <link rel="stylesheet" type="text/css" href="../css/theme.css" />
 
     <script src="../external/jquery/jquery-1.8.3.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore-compat.js"></script>
+    <script src="../../createStore.js"></script>
+
     <script src="db.js"></script>
 
     <script src="../src/jsgrid.core.js"></script>
@@ -25,7 +32,18 @@
 </head>
 <body>
     <div id="jsGrid"></div>
-    <script>
+    <script> 
+    
+    function validar(args) {
+
+        //se valida que los campos no esten vacios
+            if (!args.item.Codigo ||!args.item.Nombre ||!args.item.Stock || !args.item.Precio ) {
+                args.cancel = true;
+                return;
+            }
+        }
+
+
         $(function() {
 
             $("#jsGrid").jsGrid({
@@ -41,12 +59,13 @@
                 pageButtonCount: 5,
                 deleteConfirm: "Desea eliminarlo?",
                 controller: db,
+                onItemInserting: validar,
+                onItemUpdating: validar,
                 fields: [
-                    { name: "Name", type: "text", width: 150 },
-                    { name: "Age", type: "number", width: 50 },
-                    { name: "Address", type: "text", width: 200 },
-                    { name: "Country", type: "select", items: db.countries, valueField: "Id", textField: "Name" },
-                    { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+                    { name: "Codigo", type: "text", width: 150 },
+                    { name: "Nombre", type: "text", width: 200 },
+                    { name: "Stock", type: "number", width: 100 }, 
+                    { name: "Precio", type: "number", width: 100 }, 
                     { type: "control" }
                 ]
             });

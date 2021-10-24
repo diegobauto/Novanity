@@ -94,17 +94,13 @@
   width: 400px;
   background: #e93963;
   padding: 30px;
-  margin: auto;
   margin-top: 100px;
   border-radius: 4px;
   font-family: "calibri";
   color: white;
   box-shadow: 7px 13px 37px #000;
-  margin: auto;
-  padding: auto;
   box-sizing: border-box;
   margin-left: 35%;
-  margin-top: 10%;
 }
 
 .h4 {

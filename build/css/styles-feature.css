@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+header {
+  width: 14%;
+  float: left;
+  min-height: 100vh;
+  background: #E96363;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  padding: 14px 0 14px 8px;
+  color: white;
+}
+
+header nav a {
+  display: block;
+  margin-bottom: 6px;
+  padding: 10px 0 10px 15px;
+  text-decoration: none;
+  background: #A13349;
+  color: white;
+}
+
+header nav a:hover {
+  background: #c2203a;
+  color: white;
+  font-weight: 600;
+  transition: all 0.1s ease-in;
+}
+
+header nav .in, header nav .in:hover {
+  background: #c2203a;
+  font-weight: 600;
+}
+
+header nav a .fa-chevron-right {
+  padding-left: 10px;
+  margin-right: 10px;
+  color: #000000;
+}
+
+header nav a .fa-user, .fa-people-carry, .fa-hand-holding-usd, .fa-home {
+  margin-right: 5px;
+  width: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+main {
+  min-height: 100vh;
+  width: 86%;
+  overflow: hidden;
+}
+
+main .user_login {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  box-shadow: 0px 10px 10px -13px black;
+}
+
+main .user_login a {
+  align-items: center;
+  display: flex;
+  padding: 15px 0 15px 20px;
+}
+
+main .user_login a:hover {
+  background: rgba(105, 105, 105, 0.07);
+  transition: all 0.2s ease-in;
+}
+
+main .user_login a:hover .fa-chevron-down {
+  color: black;
+  transition: all 0.2s ease-in;
+}
+
+main .user_login a .fa-chevron-down {
+  margin-right: 20px;
+  color: #A4AFB7;
+}
+
+main .user_login .fa-bell {
+  padding-right: 20px;
+  border-right: 1px solid #BCBCCB;
+  color: #BCBCCB;
+}
+
+main .user_login .fa-bell:hover {
+  color: black;
+}
+
+main .user_login a h2 {
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #4D4F5C;
+}
+
+main .user_login a:hover h2 {
+  font-weight: 700;
+  transition: all 0.2s ease-in;
+}
+
+main .user_login * {
+  float: left;
+}
+
+.category {
+  width: 90%;
+  margin: 30px auto 0 auto;
+}
+
+.category .title {
+  margin-bottom: 40px;
+  font-weight: 400;
+  color: #43425D;
+}
+
+main .title2{
+  font-weight: 400;
+  font-size: 2rem;
+  color: #43425D;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.category div {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin: 0 2% 2% 0;
+  width: 354.5px;
+  height: 140px;
+  border: 1px solid #BCBCCB;
+  text-align: center;
+}
+
+.category div:last-child {
+  margin-right: 0;
+}
+
+.category div a {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+}
+
+.category div a:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(105, 105, 105, 0.07);
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.category div a:hover, .category div a:focus, .category div a:active {
+  color: white;
+}
+.category div a:hover:before, .category div a:focus:before, .category div a:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+.category div a figure {
+  margin-right: 30%;
+}
+
+.category div a figure h2 {
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #100F0F;
+}
+
+.category div a figure p {
+  font-size: 3rem;
+  color: #A3A0FB;
+}
+
+.category div a i {
+  font-size: 2.5rem;
+  padding: 20px 20px;
+  border-radius: 50%;
+}
+
+.category div a .fa-users{
+  color: #56D9FE;
+  border: 1px solid #56D9FE;
+}
+
+.category div a .fa-truck{
+  color: #f6b169;
+  border: 1px solid #f6b169;
+}
+
+.category div a .fa-chart-line{
+  color: #4AD991;
+  border: 1px solid #4AD991;
+}
+
+iframe{
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  width: 80%;
+  height: 70vh;
+  border: none;
+}
