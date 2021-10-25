@@ -37,7 +37,7 @@
     function validar(args) {
 
         //se valida que los campos no esten vacios
-            if (!args.item.Codigo ||!args.item.Nombre ||!args.item.Stock || !args.item.Precio ) {
+            if (!args.item.Nombre ||!args.item.Stock || !args.item.Precio || !args.item.Estado) {
                 args.cancel = true;
                 return;
             }
@@ -62,10 +62,11 @@
                 onItemInserting: validar,
                 onItemUpdating: validar,
                 fields: [
-                    { name: "Codigo", type: "text", width: 150 },
-                    { name: "Nombre", type: "text", width: 200 },
+                    { editing: false,  inserting: false, name: "Codigo", type: "text", width: 130 },
+                    { name: "Nombre", type: "text", width: 180},
                     { name: "Stock", type: "number", width: 100 }, 
                     { name: "Precio", type: "number", width: 100 }, 
+                    { name: "Estado", type: "select", items: db.estado, valueField: "Id", textField: "Name" },
                     { type: "control" }
                 ]
             });

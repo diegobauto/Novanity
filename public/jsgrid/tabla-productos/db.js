@@ -18,7 +18,8 @@
             (!filter.Codigo || client.Codigo.indexOf(filter.Codigo) > -1) &&
             (!filter.Nombre || client.Nombre.indexOf(filter.Nombre) > -1) &&
             (filter.Stock === undefined || client.Stock === filter.Stock) &&
-            (filter.Precio === undefined || client.Precio === filter.Precio)
+            (filter.Precio === undefined || client.Precio === filter.Precio) &&
+            (!filter.Estado || client.Estado === filter.Estado)
           );
         });
 
@@ -29,6 +30,7 @@
     },
 
     insertItem: function (insertingClient) {
+      insertingClient.Codigo = new Date().getTime();
       const promise = jQuery.Deferred();
       const nuevo = usuariosRef.doc();
       nuevo.set(insertingClient).then(() => {
@@ -61,4 +63,9 @@
   };
 
   window.db = db;
+  db.estado = [
+    { Name: "", Id: 0 },
+    { Name: "disponible", Id: 1 },
+    { Name: "no disponible", Id: 2 },
+  ];
 })();

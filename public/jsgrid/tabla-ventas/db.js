@@ -30,7 +30,9 @@
               client.Vendedor.indexOf(filter.Vendedor) > -1) &&
             (!filter.ID_Cliente ||
               client.ID_Cliente.indexOf(filter.ID_Cliente) > -1) &&
-            (!filter.Cliente || client.Cliente.indexOf(filter.Cliente) > -1)
+            (!filter.Cliente || client.Cliente.indexOf(filter.Cliente) > -1) &&
+            (!filter.Estado || client.Estado === filter.Estado) &&
+            (!filter.Fecha || client.Fecha.indexOf(filter.Fecha) > -1)
           );
         });
 
@@ -41,6 +43,7 @@
     },
 
     insertItem: function (insertingClient) {
+      insertingClient.N_Pedido = new Date().getTime();
       const promise = jQuery.Deferred();
       const nuevo = ventasRef.doc();
       nuevo.set(insertingClient).then(() => {
@@ -74,4 +77,11 @@
   };
 
   window.db = db;
+
+  db.estado = [
+    { Name: "", Id: 0 },
+    { Name: "en proceso", Id: 1 },
+    { Name: "cancelada", Id: 2 },
+    { Name: "entregada", Id: 3 },
+  ];
 })();

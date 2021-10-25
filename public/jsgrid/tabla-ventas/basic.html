@@ -32,13 +32,18 @@
     <div id="jsGrid"></div>
     <script>
 
+        
+
         //se valida que los campos no esten vacios
         function validar(args) {
-            if (!args.item.N_Pedido ||!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor || !args.item.ID_Cliente || !args.item.Cliente) {
+            if (!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor || !args.item.ID_Cliente || !args.item.Cliente || !args.item.Estado || !args.item.Estado || !args.item.Fecha ) {
                 args.cancel = true;
                 return;
             }
         }
+
+        //let aleatorio = Math.random() * (99999-10000)
+        
         $(function() {
 
             $("#jsGrid").jsGrid({
@@ -57,12 +62,14 @@
                 onItemInserting: validar,
                 onItemUpdating: validar,
                 fields: [
-                    {editing:false, name: "N_Pedido", type: "text", width: 100 },
+                    {editing:false, inserting: false, name: "N_Pedido", type: "text", width: 150 },
                     { name: "Descripcion", type: "text", width: 180 },
-                    { name: "Precio_Total", type: "number", width: 100 },
+                    { name: "Precio_Total", type: "number", width: 150 },
                     { name: "Vendedor", type: "text", width: 150 },
-                    { name: "ID_Cliente", type: "text", width: 150 },
+                    { name: "ID_Cliente", type: "text", width: 130 },
                     { name: "Cliente", type: "text", width: 150 },
+                    { name: "Estado", type: "select", items: db.estado, valueField: "Id", textField: "Name" },
+                    { name: "Fecha", type: "text", width: 100 },
                     { type: "control" }
                 ]
             });
