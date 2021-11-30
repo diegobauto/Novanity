@@ -8,11 +8,14 @@
   box-shadow: 0px 10px 10px -6px black;
   margin-left: 15%;
   margin-top: 10%;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 7px 13px 37px #000;
 }
 
 .card {
   width: 60%;
-  min-height: 50vh;
+  min-height: 55vh;
   float: left;
   background: linear-gradient(
     10deg,
@@ -46,6 +49,7 @@
   text-align: center;
   align-items: center;
   padding-left: 15%;
+  font-size: 40px;
 }
 
 .fill {
@@ -82,4 +86,71 @@
   font-weight: 600;
   font-size: 1.2rem;
   color: #4d4f5c;
+}
+
+/* Estilo AddUser */
+
+.formRegister {
+  width: 400px;
+  background: #e93963;
+  padding: 30px;
+  margin-top: 100px;
+  border-radius: 4px;
+  font-family: "calibri";
+  color: white;
+  box-shadow: 7px 13px 37px #000;
+  box-sizing: border-box;
+  margin-left: 35%;
+}
+
+.h4 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  width: 100%;
+  background: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #f9c8d3;
+  font-family: "calibri";
+  font-size: 18px;
+  color: #4d4f5c;
+}
+
+.p {
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.buttons {
+  width: 120px;
+  padding: 8px 0;
+  margin-top: 40px;
+  border-radius: 5px;
+  justify-content: center;
+  border: 0;
+  background: rgb(228, 222, 226);
+  color: #e93963;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5%;
+}
+
+.buttons:hover {
+  background: #f9c8d3;
+  color: #4e534a;
+  transition: all 0.5s ease-in;
+}
+
+.etiqueta {
+  font-size: medium;
+}
+
+.link {
+  color: #4e534a;
 }

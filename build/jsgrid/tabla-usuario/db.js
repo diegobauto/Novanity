@@ -1,9 +1,9 @@
 (function () {
-  const usuariosRef = firestoreDb.collection("productos");
+  const usuariosRef = firestoreDb.collection("usuarios");
   var db = {
     loadData: function (filter) {
       const promise = jQuery.Deferred();
-      usuariosRef.orderBy("Codigo").onSnapshot((data) => {
+      usuariosRef.onSnapshot((data) => {
         let lasFilas = [];
 
         data.forEach((row) => {
@@ -15,11 +15,10 @@
 
         lasFilas = lasFilas.filter((client) => {
           return (
-            (!filter.Codigo || client.Codigo.indexOf(filter.Codigo) > -1) &&
             (!filter.Nombre || client.Nombre.indexOf(filter.Nombre) > -1) &&
-            (filter.Stock === undefined || client.Stock === filter.Stock) &&
-            (filter.Precio === undefined || client.Precio === filter.Precio) &&
-            (!filter.Estado || client.Estado === filter.Estado)
+            (!filter.Correo || client.Correo.indexOf(filter.Correo) > -1) &&
+            (!filter.Estado || client.Estado === filter.Estado) &&
+            (!filter.Rol || client.Rol === filter.Rol)
           );
         });
 
@@ -30,7 +29,6 @@
     },
 
     insertItem: function (insertingClient) {
-      insertingClient.Codigo = new Date().getTime();
       const promise = jQuery.Deferred();
       const nuevo = usuariosRef.doc();
       nuevo.set(insertingClient).then(() => {
@@ -63,9 +61,16 @@
   };
 
   window.db = db;
+
+  db.roles = [
+    { Name: "", Id: 0 },
+    { Name: "Vendedor", Id: 1 },
+    { Name: "Administrador", Id: 2 },
+  ];
+
   db.estado = [
     { Name: "", Id: 0 },
-    { Name: "disponible", Id: 1 },
-    { Name: "no disponible", Id: 2 },
+    { Name: "Activo", Id: 1 },
+    { Name: "Inactivo", Id: 2 },
   ];
 })();

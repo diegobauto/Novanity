@@ -114,10 +114,21 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+//base de datos
+
 export async function getRolUsuario(email) {
   const rolRef = collection(database, "usuarios");
   const q = query(rolRef, where("Correo", "==", email));
   const docs = await getDocs(q);
   const role = docs.docs[0].data().Rol;
   return role;
+}
+
+export async function getEstadoUsuario(email) {
+  const rolRef = collection(database, "usuarios");
+  const q = query(rolRef, where("Correo", "==", email));
+  const docs = await getDocs(q);
+  let estado = docs.docs.length > 0 ? docs.docs[0].data().Estado : 2;
+
+  return estado;
 }

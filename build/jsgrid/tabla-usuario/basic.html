@@ -10,12 +10,12 @@
     <link rel="stylesheet" type="text/css" href="../css/theme.css" />
 
     <script src="../external/jquery/jquery-1.8.3.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore-compat.js"></script>
     <script src="../../createStore.js"></script>
     <script src="db.js"></script>
-
 
     <script src="../src/jsgrid.core.js"></script>
     <script src="../src/jsgrid.load-indicator.js"></script>
@@ -27,22 +27,19 @@
     <script src="../src/fields/jsgrid.field.select.js"></script>
     <script src="../src/fields/jsgrid.field.checkbox.js"></script>
     <script src="../src/fields/jsgrid.field.control.js"></script>
+    
 </head>
 <body>
     <div id="jsGrid"></div>
     <script>
 
-        
-
         //se valida que los campos no esten vacios
         function validar(args) {
-            if (!args.item.Descripcion ||!args.item.Precio_Total || !args.item.Vendedor || !args.item.ID_Cliente || !args.item.Cliente || !args.item.Estado || !args.item.Estado || !args.item.Fecha ) {
+            if (!args.item.Nombre ||!args.item.Correo ||!args.item.Rol || !args.item.Estado ) {
                 args.cancel = true;
                 return;
             }
         }
-
-        //let aleatorio = Math.random() * (99999-10000)
         
         $(function() {
 
@@ -62,21 +59,15 @@
                 onItemInserting: validar,
                 onItemUpdating: validar,
                 fields: [
-                    {editing:false, inserting: false, name: "N_Pedido", type: "text", width: 150 },
-                    { name: "Descripcion", type: "text", width: 180 },
-                    { name: "Precio_Total", type: "number", width: 150 },
-                    { name: "Vendedor", type: "text", width: 150 },
-                    { name: "ID_Cliente", type: "text", width: 130 },
-                    { name: "Cliente", type: "text", width: 150 },
+                    { name: "Nombre", type: "text", width: 150 },
+                    { name: "Correo", type: "text", width: 200 },
+                    { name: "Rol", type: "select", items: db.roles, valueField: "Id", textField: "Name" },
                     { name: "Estado", type: "select", items: db.estado, valueField: "Id", textField: "Name" },
-                    { name: "Fecha", type: "text", width: 100 },
                     { type: "control" }
                 ]
             });
 
         });
-
-        
     </script>
 </body>
 </html>
